@@ -1,0 +1,52 @@
+CREATE DATABASE NETFLIX_PROJECT;
+USE NETFLIX_PROJECT;
+
+CREATE TABLE NETFLIX (
+show_id VARCHAR(5),
+type varchar(10),
+title VARCHAR(150),
+director VARCHAR(208),
+cast VARCHAR(1000),
+country VARCHAR(150),
+date_added VARCHAR(50),
+release_year INT,
+rating VARCHAR(10),
+duration VARCHAR(15),
+listed_in VARCHAR(250),
+description VARCHAR(225)
+);
+
+SELECT * FROM NETFLIX;
+SELECT DISTINCT TYPE FROM NETFLIX;
+SELECT COUNT(TYPE(MOVIE)) FROM NETFLIX;
+
+-- 1.count the number of movies vs tv shows in data 
+SELECT type,count(*) from NETFLIX GROUP BY type;
+
+-- 2. find the most comman rating for movie and tv shows
+SELECT type,rating,count(*) from NETFLIX GROUP BY 1,2 ORDER BY 1,3 DESC;
+
+-- 3. FIND ALL THE MOVIES RELEASED ON 2020
+SELECT*FROM NETFLIX WHERE TYPE='MOVIE' AND release_year=2020;
+ 
+ -- 4. find the top 5 countries with the most content on netflix
+ SELECT COUNTRY,COUNT(show_id) FROM NETFLIX group by 1;
+ 
+ -- 5.IDENTIFY THE LONGEST MOVIE
+ SELECT*FROM NETFLIX WHERE type='movie' AND duration=(SELECT MAX(duration) from NETFLIX);
+ 
+ -- 6. FIND CONTENT ADDED IN THE LAST FIVE YEARS
+SELECT*FROM NETFLIX WHERE TO_DATE(DATE_ADDED, 'MONTH DD,YYYY') >= current_date-INTERVAL '5YEARS'
+ 
+ --- 7. FIND ALL THE MOVIES AND TV SHOWS DIRECTED BY Robert Luketic
+SELECT * 
+FROM NETFLIX 
+WHERE director = 'Robert Luketic';
+
+-- 8. FIND ALL THE MOVIES WITHOUT DIRECTOR
+SELECT*FROM NETFLIX WHERE DIRECTOR=NULL;
+
+-- 9.FIND HOW MANY MOVIES 'SALMAN KHAN; DID?
+SELECT*FROM NETFLIX WHERE CAST LIKE  '%SALMAN KHAN';
+
+-- 10.
